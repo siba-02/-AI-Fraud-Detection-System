@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Panel - AI Fraud Detection</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <div class="navbar">
+        <div class="logo">🛡️ GuardAI Admin</div>
+        <div class="nav-buttons">
+            <span id="adminName" style="margin-right: 1rem; color: #667eea; font-weight: 600;">Admin</span>
+            <button class="btn btn-outline" onclick="logout()">Logout</button>
+        </div>
+    </div>
+
+    <div class="container fade-in">
+        <h1>Transaction Review Panel</h1>
+        <p>Review suspicious transactions in real time</p>
+
+        <div class="stats-grid" id="statsGrid">
+            <div class="stat-card"><div class="stat-title">Total Transactions</div><div class="stat-value" id="totalTrans">0</div></div>
+            <div class="stat-card"><div class="stat-title">Total Users</div><div class="stat-value" id="totalUsers">0</div></div>
+            <div class="stat-card"><div class="stat-title">Blocked</div><div class="stat-value" id="blockedCount">0</div></div>
+            <div class="stat-card"><div class="stat-title">Approved</div><div class="stat-value" id="approvedCount">0</div></div>
+        </div>
+
+        <div style="margin-bottom: 1rem; display: flex; gap: 1rem; flex-wrap: wrap;">
+            <button class="btn btn-primary" onclick="filterTransactions('ALL')">ALL</button>
+            <button class="btn btn-success" onclick="filterTransactions('APPROVED')">APPROVED</button>
+            <button class="btn btn-danger" onclick="filterTransactions('BLOCKED')">BLOCKED</button>
+            <button class="btn btn-warning" onclick="filterTransactions('FLAGGED')">FLAGGED</button>
+        </div>
+
+        <div class="table-container">
+            <table>
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>User</th>
+                        <th>Amount</th>
+                        <th>Merchant</th>
+                        <th>Location</th>
+                        <th>Risk Score</th>
+                        <th>Status</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+                <tbody id="transactionTable"></tbody>
+            </table>
+        </div>
+    </div>
+
+    <!-- Include auth.js for logout function -->
+    <script src="js/auth.js"></script>
+    <script src="js/admin.js"></script>
+</body>
+</html>

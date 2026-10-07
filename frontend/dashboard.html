@@ -1,0 +1,741 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+    <title>NexusGuard | AI Fraud Detection & Intelligence</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;14..32,400;14..32,500;14..32,600;14..32,700;14..32,800;14..32,900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: radial-gradient(circle at 10% 20%, rgba(15, 25, 45, 1) 0%, rgba(8, 15, 30, 1) 100%);
+            min-height: 100vh;
+            color: #f0f3fc;
+            scroll-behavior: smooth;
+        }
+
+        /* Glass morphism core */
+        .glass-card {
+            background: rgba(20, 30, 55, 0.45);
+            backdrop-filter: blur(14px);
+            border-radius: 2rem;
+            border: 1px solid rgba(110, 130, 200, 0.2);
+            box-shadow: 0 20px 40px -12px rgba(0, 0, 0, 0.3);
+            transition: all 0.35s cubic-bezier(0.2, 0.9, 0.4, 1.1);
+        }
+
+        .glass-card:hover {
+            border-color: rgba(110, 130, 255, 0.5);
+            box-shadow: 0 25px 45px -12px rgba(0, 0, 0, 0.5);
+            transform: translateY(-3px);
+        }
+
+        /* Header premium style */
+        .header {
+            background: rgba(10, 18, 30, 0.75);
+            backdrop-filter: blur(16px);
+            border-bottom: 1px solid rgba(72, 187, 255, 0.2);
+            position: sticky;
+            top: 0;
+            z-index: 1100;
+        }
+
+        .header-container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0.9rem 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .logo-icon {
+            width: 48px;
+            height: 48px;
+            background: linear-gradient(145deg, #3b82f6, #8b5cf6);
+            border-radius: 18px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 26px;
+            box-shadow: 0 8px 20px -5px #3b82f680;
+            transition: 0.2s;
+        }
+
+        .logo-text h1 {
+            font-size: 1.7rem;
+            font-weight: 800;
+            background: linear-gradient(135deg, #E0F2FE, #A78BFA);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            letter-spacing: -0.3px;
+        }
+
+        .logo-text p {
+            font-size: 0.7rem;
+            color: #94a3b8;
+            letter-spacing: 0.5px;
+        }
+
+        .user-info {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            background: rgba(30, 41, 59, 0.7);
+            backdrop-filter: blur(4px);
+            padding: 6px 18px 6px 12px;
+            border-radius: 60px;
+            border: 1px solid #334155;
+        }
+
+        .user-avatar {
+            width: 42px;
+            height: 42px;
+            background: linear-gradient(145deg, #38bdf8, #8b5cf6);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 800;
+            font-size: 18px;
+            box-shadow: 0 0 12px rgba(139, 92, 246, 0.4);
+        }
+
+        .user-name {
+            font-weight: 700;
+            color: #f1f5f9;
+        }
+
+        .user-role {
+            font-size: 0.7rem;
+            color: #9ca3af;
+        }
+
+        .logout-btn {
+            background: rgba(239, 68, 68, 0.15);
+            backdrop-filter: blur(4px);
+            border: 1px solid rgba(239, 68, 68, 0.5);
+            color: #fca5a5;
+            padding: 8px 22px;
+            border-radius: 40px;
+            font-weight: 600;
+            transition: 0.25s;
+            cursor: pointer;
+        }
+
+        .logout-btn:hover {
+            background: #ef4444;
+            color: white;
+            border-color: #ef4444;
+            transform: scale(1.02);
+            box-shadow: 0 6px 14px #ef444430;
+        }
+
+        /* stats grid modern */
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(270px, 1fr));
+            gap: 1.8rem;
+            margin-bottom: 2.5rem;
+        }
+
+        .stat-card {
+            background: rgba(15, 25, 45, 0.65);
+            backdrop-filter: blur(12px);
+            padding: 1.6rem;
+            border-radius: 2rem;
+            border: 1px solid rgba(72, 187, 255, 0.2);
+            transition: all 0.3s;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .stat-card::after {
+            content: '';
+            position: absolute;
+            top: -30%;
+            right: -20%;
+            width: 150px;
+            height: 150px;
+            background: radial-gradient(circle, rgba(59,130,246,0.2), transparent);
+            border-radius: 50%;
+            pointer-events: none;
+        }
+
+        .stat-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .stat-title {
+            font-size: 0.85rem;
+            font-weight: 600;
+            letter-spacing: 1px;
+            color: #94a3b8;
+        }
+
+        .stat-icon {
+            width: 52px;
+            height: 52px;
+            background: linear-gradient(145deg, #1e293b, #0f172a);
+            border-radius: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 26px;
+            color: #60a5fa;
+        }
+
+        .stat-value {
+            font-size: 2.8rem;
+            font-weight: 800;
+            background: linear-gradient(135deg, #FFFFFF, #cbd5e1);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            margin-top: 0.7rem;
+        }
+
+        /* Form styling premium */
+        .form-wrapper {
+            background: rgba(15, 25, 45, 0.6);
+            backdrop-filter: blur(14px);
+            border-radius: 2rem;
+            padding: 2rem;
+            border: 1px solid rgba(59, 130, 246, 0.3);
+            margin-bottom: 2rem;
+        }
+
+        .form-title {
+            font-size: 1.6rem;
+            font-weight: 700;
+            margin-bottom: 1.8rem;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            background: linear-gradient(120deg, #c084fc, #60a5fa);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+        }
+
+        .form-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1.5rem;
+        }
+
+        .input-group {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .input-group label {
+            font-weight: 600;
+            color: #cbd5e1;
+            font-size: 0.85rem;
+            letter-spacing: 0.3px;
+        }
+
+        .input-group input, .input-group select {
+            background: rgba(0, 0, 0, 0.35);
+            border: 1px solid #334155;
+            padding: 12px 16px;
+            border-radius: 1.2rem;
+            font-size: 0.95rem;
+            color: white;
+            transition: all 0.2s;
+        }
+
+        .input-group input:focus, .input-group select:focus {
+            outline: none;
+            border-color: #8b5cf6;
+            box-shadow: 0 0 0 3px rgba(139, 92, 246, 0.3);
+            background: rgba(0, 0, 0, 0.6);
+        }
+
+        .submit-btn {
+            background: linear-gradient(95deg, #3b82f6, #a855f7);
+            border: none;
+            padding: 14px;
+            border-radius: 2rem;
+            font-weight: 700;
+            font-size: 1rem;
+            margin-top: 1rem;
+            cursor: pointer;
+            transition: 0.25s;
+            color: white;
+            box-shadow: 0 4px 12px rgba(59,130,246,0.3);
+        }
+
+        .submit-btn:hover {
+            transform: scale(1.02);
+            box-shadow: 0 12px 24px -8px #8b5cf6;
+            background: linear-gradient(95deg, #2563eb, #9333ea);
+        }
+
+        /* Table modern glass */
+        .table-wrapper {
+            background: rgba(15, 25, 45, 0.55);
+            backdrop-filter: blur(12px);
+            border-radius: 2rem;
+            padding: 1.6rem;
+            border: 1px solid rgba(100, 116, 139, 0.3);
+            overflow-x: auto;
+        }
+
+        .table-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            margin-bottom: 1.5rem;
+        }
+
+        .table-title {
+            font-size: 1.4rem;
+            font-weight: 700;
+            display: flex;
+            gap: 10px;
+        }
+
+        .refresh-btn {
+            background: rgba(30, 41, 59, 0.8);
+            border: 1px solid #475569;
+            padding: 8px 20px;
+            border-radius: 2rem;
+            color: #e2e8f0;
+            cursor: pointer;
+            transition: 0.2s;
+        }
+
+        .refresh-btn:hover {
+            background: #334155;
+            border-color: #8b5cf6;
+            transform: translateY(-2px);
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        th {
+            text-align: left;
+            padding: 1rem 0.8rem;
+            font-weight: 600;
+            color: #b9c8ff;
+            border-bottom: 1px solid #334155;
+        }
+
+        td {
+            padding: 1rem 0.8rem;
+            border-bottom: 1px solid rgba(51, 65, 85, 0.6);
+            color: #eef2ff;
+        }
+
+        tr:hover td {
+            background: rgba(59, 130, 246, 0.1);
+        }
+
+        .badge {
+            padding: 5px 12px;
+            border-radius: 40px;
+            font-size: 0.7rem;
+            font-weight: 700;
+            display: inline-block;
+            backdrop-filter: blur(4px);
+        }
+
+        .badge-approved { background: #05966930; color: #6ee7b7; border-left: 2px solid #10b981; }
+        .badge-blocked { background: #dc262630; color: #fca5a5; border-left: 2px solid #ef4444; }
+        .badge-flagged { background: #d9770630; color: #fdba74; border-left: 2px solid #f59e0b; }
+        .badge-pending { background: #3b82f630; color: #93c5fd; border-left: 2px solid #3b82f6; }
+
+        /* footer premium */
+        .footer {
+            background: rgba(5, 10, 20, 0.85);
+            backdrop-filter: blur(12px);
+            margin-top: 4rem;
+            padding: 2rem 1.5rem;
+            border-top: 1px solid #1e293b;
+        }
+
+        .footer-container {
+            max-width: 1400px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 2rem;
+        }
+
+        .social-links a {
+            display: inline-flex;
+            background: #1e293b;
+            margin-right: 10px;
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            align-items: center;
+            justify-content: center;
+            transition: 0.2s;
+            color: white;
+        }
+
+        .social-links a:hover {
+            background: #8b5cf6;
+            transform: translateY(-3px);
+        }
+
+        /* Chatbot elevated */
+        .chatbot {
+            position: fixed;
+            bottom: 2rem;
+            right: 2rem;
+            width: 390px;
+            background: rgba(12, 20, 35, 0.95);
+            backdrop-filter: blur(16px);
+            border-radius: 28px;
+            border: 1px solid rgba(139, 92, 246, 0.5);
+            box-shadow: 0 25px 45px -12px black;
+            z-index: 1200;
+            transition: 0.2s;
+        }
+
+        .chat-header {
+            background: linear-gradient(115deg, #1e293b, #0f172a);
+            padding: 1rem 1.3rem;
+            border-radius: 28px 28px 0 0;
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            font-weight: 700;
+            color: white;
+        }
+
+        .chat-body {
+            max-height: 430px;
+            overflow-y: auto;
+            padding: 1rem;
+            display: none;
+            background: rgba(0, 0, 0, 0.3);
+            border-radius: 0 0 28px 28px;
+        }
+
+        .chat-message {
+            margin-bottom: 12px;
+            padding: 10px 14px;
+            border-radius: 20px;
+            max-width: 85%;
+            font-size: 0.85rem;
+        }
+
+        .user-message {
+            background: linear-gradient(125deg, #3b82f6, #8b5cf6);
+            margin-left: auto;
+            color: white;
+            border-radius: 22px 22px 6px 22px;
+        }
+
+        .bot-message {
+            background: #1e293b;
+            color: #e2e8f0;
+            margin-right: auto;
+            border-radius: 22px 22px 22px 6px;
+        }
+
+        .chat-input-container {
+            display: flex;
+            padding: 12px;
+            gap: 8px;
+            background: #0f172a;
+            border-top: 1px solid #334155;
+        }
+
+        .chat-input-container input {
+            background: #1e293b;
+            border: none;
+            padding: 10px 14px;
+            border-radius: 28px;
+            color: white;
+            flex: 1;
+        }
+
+        /* responsiveness */
+        @media (max-width: 680px) {
+            .header-container { flex-direction: column; gap: 12px; }
+            .chatbot { width: 92%; right: 4%; bottom: 1rem; }
+            .stat-value { font-size: 2rem; }
+        }
+    </style>
+</head>
+<body>
+
+<header class="header">
+    <div class="header-container">
+        <div class="logo">
+            <div class="logo-icon"><i class="fas fa-brain"></i></div>
+            <div class="logo-text">
+                <h1>NexusGuard</h1>
+                <p>Quantum AI • Real‑time Shield</p>
+            </div>
+        </div>
+        <div class="nav-menu" style="display: flex; align-items: center; gap: 1rem;">
+            <div class="user-info">
+                <div class="user-avatar" id="userAvatar">U</div>
+                <div class="user-details">
+                    <span class="user-name" id="userName">Explorer</span>
+                    <span class="user-role">AI Sentinel</span>
+                </div>
+            </div>
+            <button class="logout-btn" onclick="logout()"><i class="fas fa-fingerprint"></i> Lockout</button>
+        </div>
+    </div>
+</header>
+
+<main class="main-container" style="max-width: 1400px; margin: 2rem auto; padding: 0 1.8rem;">
+    <!-- Dynamic stats -->
+    <div class="stats-grid">
+        <div class="stat-card"><div class="stat-header"><span class="stat-title"><i class="fas fa-chart-line"></i> TOTAL TRANSACTIONS</span><div class="stat-icon"><i class="fas fa-coins"></i></div></div><div class="stat-value" id="myTransactions">0</div></div>
+        <div class="stat-card"><div class="stat-header"><span class="stat-title"><i class="fas fa-flag-checkered"></i> FLAGGED ALERTS</span><div class="stat-icon"><i class="fas fa-shield-virus"></i></div></div><div class="stat-value" id="alerts">0</div></div>
+        <div class="stat-card"><div class="stat-header"><span class="stat-title"><i class="fas fa-microchip"></i> SECURITY INDEX</span><div class="stat-icon"><i class="fas fa-lock"></i></div></div><div class="stat-value" id="securityScore">100%</div></div>
+    </div>
+
+    <!-- Transaction form premium -->
+    <div class="form-wrapper">
+        <div class="form-title"><i class="fas fa-shield-heart"></i> <span>Inject Transaction · ML Analysis</span></div>
+        <form id="transactionForm">
+            <div class="form-grid">
+                <div class="input-group"><label><i class="fas fa-indian-rupee-sign"></i> Amount (₹)</label><input type="number" id="amount" placeholder="e.g. 12999" required></div>
+                <div class="input-group"><label><i class="fas fa-building"></i> Merchant</label><select id="merchant"><option>Amazon India</option><option>Flipkart</option><option>Paytm</option><option>RazorPayX</option><option>Other</option></select></div>
+                <div class="input-group"><label><i class="fas fa-map-pin"></i> Location</label><input type="text" id="location" placeholder="City, Country" required></div>
+            </div>
+            <button type="submit" class="submit-btn"><i class="fas fa-robot"></i> Analyze & Submit</button>
+        </form>
+    </div>
+
+    <!-- History Table glass -->
+    <div class="table-wrapper">
+        <div class="table-header"><div class="table-title"><i class="fas fa-database"></i> <span>Ledger Intelligence</span></div><button class="refresh-btn" onclick="loadTransactions()"><i class="fas fa-sync-alt"></i> Sync</button></div>
+        <div style="overflow-x: auto;">
+            <table>
+                <thead><tr><th>Tx ID</th><th>Amount (₹)</th><th>Merchant</th><th>Location</th><th>Verdict</th></tr></thead>
+                <tbody id="transactionHistory"><tr><td colspan="5" style="text-align:center;">Syncing encrypted ledger...</td></tr></tbody>
+            </table>
+        </div>
+    </div>
+</main>
+
+<footer class="footer">
+    <div class="footer-container">
+        <div class="footer-section"><h4><i class="fas fa-gem"></i> NexusGuard AI</h4><p>Next‑gen anomaly detection · 99.97% precision. Your assets, our mission.</p><div class="social-links"><a href="#"><i class="fab fa-twitter"></i></a><a href="#"><i class="fab fa-linkedin-in"></i></a><a href="#"><i class="fab fa-github"></i></a></div></div>
+        <div class="footer-section"><h4>Resources</h4><p>🔮 AI Threat Intel</p><p>📊 Compliance Hub</p><p>⚡ Real‑time API</p></div>
+        <div class="footer-section"><h4>Neural Contact</h4><p><i class="fas fa-envelope"></i> sentinel@nexusguard.ai</p><p><i class="fas fa-headset"></i> AI Concierge 24/7</p></div>
+    </div>
+    <div class="footer-bottom" style="text-align:center; margin-top: 2rem; color:#6c86a3;">&copy; 2025 NexusGuard — cognitive fraud defense layer</div>
+</footer>
+
+<!-- Chatbot assistant -->
+<div class="chatbot">
+    <div class="chat-header" onclick="toggleChat()"><span><i class="fas fa-robot"></i> Athena AI · Fraud Analyst</span><i class="fas fa-comment-dots"></i></div>
+    <div class="chat-body" id="chatBody">
+        <div class="chat-message bot-message"><i class="fas fa-microchip"></i> ⚡ I'm Athena, your fraud co-pilot. Ask me about risk patterns, transaction rules, or security tips!</div>
+        <div class="chat-input-container"><input type="text" id="chatInput" placeholder="Ask about fraud thresholds..."><button class="submit-btn" onclick="sendMessage()" style="padding:8px 18px;">Send</button></div>
+    </div>
+</div>
+
+<script>
+    // ----- GLOBAL STATE & MOCK BACKEND (simulate realistic fraud) -----
+    let transactionsArray = [];
+
+    // load initial demo data
+    function seedDemoData() {
+        const stored = localStorage.getItem('nexus_transactions');
+        if(stored) {
+            transactionsArray = JSON.parse(stored);
+        } else {
+            transactionsArray = [
+                { id: "TXN1001", amount: 24999, receiverId: "Amazon India", senderLocation: "Mumbai", status: "APPROVED", riskLevel: "LOW", timestamp: Date.now() - 86400000 },
+                { id: "TXN1002", amount: 185000, receiverId: "Unknown Store", senderLocation: "Dubai", status: "BLOCKED", riskLevel: "CRITICAL", timestamp: Date.now() - 43200000 },
+                { id: "TXN1003", amount: 5500, receiverId: "Flipkart", senderLocation: "Delhi", status: "APPROVED", riskLevel: "LOW", timestamp: Date.now() - 21600000 },
+                { id: "TXN1004", amount: 78400, receiverId: "Paytm", senderLocation: "Bengaluru", status: "FLAGGED", riskLevel: "MEDIUM", timestamp: Date.now() - 7200000 }
+            ];
+            localStorage.setItem('nexus_transactions', JSON.stringify(transactionsArray));
+        }
+        updateStatsAndTable();
+    }
+
+    function updateStatsAndTable() {
+        const tbody = document.getElementById('transactionHistory');
+        if(!transactionsArray.length) {
+            tbody.innerHTML = '<tr><td colspan="5" style="text-align:center;">✨ No transactions, add new one</td></tr>';
+            document.getElementById('myTransactions').innerText = '0';
+            document.getElementById('alerts').innerText = '0';
+            document.getElementById('securityScore').innerText = '100%';
+            return;
+        }
+        tbody.innerHTML = '';
+        let alerted = 0;
+        transactionsArray.slice().reverse().forEach(t => {
+            const status = t.status || 'PENDING';
+            let badgeClass = 'badge-pending';
+            if(status === 'APPROVED') badgeClass = 'badge-approved';
+            else if(status === 'BLOCKED') badgeClass = 'badge-blocked';
+            else if(status === 'FLAGGED') badgeClass = 'badge-flagged';
+            if(status === 'FLAGGED' || status === 'BLOCKED') alerted++;
+            tbody.innerHTML += `<tr>
+                <td>${t.id || t.transactionId || 'TX'+Math.floor(Math.random()*9999)}</td>
+                <td>₹${(t.amount || 0).toLocaleString('en-IN')}</td>
+                <td>${t.receiverId || 'N/A'}</td>
+                <td>${t.senderLocation || 'Global'}</td>
+                <td><span class="badge ${badgeClass}">${status}</span></td>
+            </tr>`;
+        });
+        document.getElementById('myTransactions').innerText = transactionsArray.length;
+        document.getElementById('alerts').innerText = alerted;
+        let safeScore = transactionsArray.length ? ((transactionsArray.length - alerted) / transactionsArray.length * 100).toFixed(0) : 100;
+        document.getElementById('securityScore').innerText = safeScore + '%';
+    }
+
+    // intelligent fraud detection simulator (dynamic rules)
+    function evaluateFraudRisk(amount, merchant, location) {
+        let riskScore = 0;
+        let reason = "";
+        if(amount > 75000) { riskScore += 45; reason = "High amount > ₹75k"; }
+        else if(amount > 35000) { riskScore += 20; reason = "Moderate amount"; }
+        if(merchant === "Other") { riskScore += 30; reason += " + untrusted merchant"; }
+        if(location && (location.toLowerCase().includes('abroad') || location.toLowerCase().includes('nigeria') || location.toLowerCase().includes('dark'))) riskScore += 35;
+        if(amount > 200000) riskScore = 95;
+        if(riskScore >= 70) return { status: "BLOCKED", riskLevel: "HIGH", message: "🚨 Blocked: Suspicious pattern" };
+        if(riskScore >= 40) return { status: "FLAGGED", riskLevel: "MEDIUM", message: "⚠️ Flagged for manual review" };
+        return { status: "APPROVED", riskLevel: "LOW", message: "✅ AI cleared" };
+    }
+
+    // add transaction with AI verdict
+    window.addTransaction = async function(transaction) {
+        const newId = "TXN" + (Math.floor(Math.random() * 90000) + 10000);
+        const fraudEval = evaluateFraudRisk(transaction.amount, transaction.receiverId, transaction.senderLocation);
+        const newTx = {
+            id: newId,
+            amount: transaction.amount,
+            receiverId: transaction.receiverId,
+            senderLocation: transaction.senderLocation,
+            status: fraudEval.status,
+            riskLevel: fraudEval.riskLevel,
+            timestamp: Date.now()
+        };
+        transactionsArray.unshift(newTx);
+        localStorage.setItem('nexus_transactions', JSON.stringify(transactionsArray));
+        updateStatsAndTable();
+        return fraudEval;
+    };
+
+    // form handler
+    document.getElementById('transactionForm')?.addEventListener('submit', async (e) => {
+        e.preventDefault();
+        const username = localStorage.getItem('username') || "Sentinel";
+        const amountVal = parseFloat(document.getElementById('amount').value);
+        if(isNaN(amountVal) || amountVal <= 0) { alert("Enter valid amount"); return; }
+        const merchant = document.getElementById('merchant').value;
+        const location = document.getElementById('location').value.trim();
+        if(!location) { alert("Location required for risk mapping"); return; }
+        const txData = {
+            amount: amountVal,
+            receiverId: merchant,
+            senderLocation: location,
+        };
+        const result = await window.addTransaction(txData);
+        alert(`🤖 AI Decision: ${result.status}\nRisk: ${result.riskLevel}\n${result.message}`);
+        document.getElementById('transactionForm').reset();
+    });
+
+    // load from localstorage on refresh
+    window.loadTransactions = function() {
+        const stored = localStorage.getItem('nexus_transactions');
+        if(stored) transactionsArray = JSON.parse(stored);
+        updateStatsAndTable();
+    };
+
+    // Logout & user info
+    window.logout = function() {
+        localStorage.removeItem('username');
+        alert("Session terminated. Redirecting to login...");
+        window.location.href = "login.html";
+    };
+    const storedUser = localStorage.getItem('username');
+    if(storedUser) {
+        document.getElementById('userName').innerText = storedUser;
+        document.getElementById('userAvatar').innerText = storedUser.charAt(0).toUpperCase();
+    } else {
+        localStorage.setItem('username', 'CyberAgent');
+        document.getElementById('userName').innerText = 'CyberAgent';
+        document.getElementById('userAvatar').innerText = 'C';
+    }
+    seedDemoData();
+
+    // ----- CHATBOT INTELLIGENCE (simulate smart responses)-----
+    window.toggleChat = function() {
+        const body = document.getElementById('chatBody');
+        if(body.style.display === 'none' || body.style.display === '') body.style.display = 'block';
+        else body.style.display = 'none';
+    };
+    window.sendMessage = function() {
+        const input = document.getElementById('chatInput');
+        const msg = input.value.trim();
+        if(!msg) return;
+        const chatBodyDiv = document.getElementById('chatBody');
+        const userMsgDiv = document.createElement('div');
+        userMsgDiv.className = 'chat-message user-message';
+        userMsgDiv.innerHTML = `<i class="fas fa-user"></i> ${escapeHtml(msg)}`;
+        chatBodyDiv.insertBefore(userMsgDiv, chatBodyDiv.querySelector('.chat-input-container'));
+        setTimeout(() => {
+            const botReply = getBotResponse(msg.toLowerCase());
+            const botMsgDiv = document.createElement('div');
+            botMsgDiv.className = 'chat-message bot-message';
+            botMsgDiv.innerHTML = `<i class="fas fa-robot"></i> ${botReply}`;
+            chatBodyDiv.insertBefore(botMsgDiv, chatBodyDiv.querySelector('.chat-input-container'));
+            chatBodyDiv.scrollTop = chatBodyDiv.scrollHeight;
+        }, 400);
+        input.value = '';
+        chatBodyDiv.scrollTop = chatBodyDiv.scrollHeight;
+    };
+    function getBotResponse(q) {
+        if(q.includes('fraud') || q.includes('risk')) return "🛡️ Our AI uses amount velocity, merchant reputation & location anomalies. Transactions > ₹75k or 'Other' merchants get flagged. We also monitor cross-border patterns.";
+        if(q.includes('block') || q.includes('blocked')) return "⛔ A transaction is blocked when risk score exceeds 70% — usually high amount + unusual merchant + risky location. You can review details in ledger.";
+        if(q.includes('score') || q.includes('security')) return "📈 Security index is based on approved vs suspicious ratio. Keep your transactions legitimate to maintain high score!";
+        if(q.includes('alert')) return "⚠️ Flagged transactions appear in orange; you can investigate them. Our AI constantly learns from new data to improve.";
+        return "💡 I can explain fraud thresholds, how our model works, or help interpret transaction status. Ask about 'fraud' or 'blocked'!";
+    }
+    function escapeHtml(str) {
+        return str.replace(/[&<>]/g, function(m) {
+            if(m === '&') return '&amp;';
+            if(m === '<') return '&lt;';
+            if(m === '>') return '&gt;';
+            return m;
+        });
+    }
+    // ensure chat default visible if needed
+    document.addEventListener('DOMContentLoaded', () => {
+        const chatBody = document.getElementById('chatBody');
+        if(chatBody) chatBody.style.display = 'none';
+    });
+</script>
+</body>
+</html>

@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Test Transaction API</title>
+    <style>
+        body { font-family: Arial; padding: 20px; }
+        button { padding: 10px 20px; margin: 10px; cursor: pointer; }
+        pre { background: #f4f4f4; padding: 10px; border-radius: 5px; }
+        .success { color: green; }
+        .error { color: red; }
+    </style>
+</head>
+<body>
+    <h1>Transaction API Test</h1>
+    
+    <button onclick="testGetTransactions()">📋 Get All Transactions</button>
+    <button onclick="testAddTransaction()">➕ Add Test Transaction</button>
+    <button onclick="testStats()">📊 Get Stats</button>
+    
+    <h3>Result:</h3>
+    <pre id="result">Click a button to test...</pre>
+
+    <script>
+        const API_URL = 'http://localhost:8080/api';
+        
+        async function testGetTransactions() {
+            const resultDiv = document.getElementById('result');
+            resultDiv.innerHTML = 'Loading...';
+            
+            try {
+                const response = await fetch(`${API_URL}/transactions/all`);
+                const data = await response.json();
+                resultDiv.innerHTML = JSON.stringify(data, null, 2);
+                resultDiv.className = 'success';
+                console.log('Transactions:', data);
+            } catch (error) {
+                resultDiv.innerHTML = `Error: ${error.message}\n\nMake sure backend is running on port 8080`;
+                resultDiv.className = 'error';
+                console.error('Error:', error);
+            }
+        }
+        
+        async function testAddTransaction() {
+            const resultDiv = document.getElementById('result');
+            resultDiv.innerHTML = 'Adding transaction...';
+            
+            const transaction = {
+                amount: 5000,
+                senderId: 'testuser',
+                receiverId: 'Amazon Test',
+                senderLocation: 'Mumbai',
+                receiverLocation: 'Mumbai',
+                paymentMethod: 'ONLINE',
+                currency: 'INR'
+            };
+            
+            try {
+                const response = await fetch(`${API_URL}/transactions/add`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(transaction)
+                });
+                const data = await response.json();
+                resultDiv.innerHTML = JSON.stringify(data, null, 2);
+                resultDiv.className = 'success';
+                console.log('Added:', data);
+            } catch (error) {
+                resultDiv.innerHTML = `Error: ${error.message}`;
+                resultDiv.className = 'error';
+                console.error('Error:', error);
+            }
+        }
+        
+        async function testStats() {
+            const resultDiv = document.getElementById('result');
+            resultDiv.innerHTML = 'Loading stats...';
+            
+            try {
+                const response = await fetch(`${API_URL}/transactions/stats`);
+                const data = await response.json();
+                resultDiv.innerHTML = JSON.stringify(data, null, 2);
+                resultDiv.className = 'success';
+                console.log('Stats:', data);
+            } catch (error) {
+                resultDiv.innerHTML = `Error: ${error.message}`;
+                resultDiv.className = 'error';
+                console.error('Error:', error);
+            }
+        }
+    </script>
+</body>
+</html>

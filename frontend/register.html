@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Register - AI Fraud Detection</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <div class="navbar">
+        <div class="logo">🛡️ AI Fraud Detection</div>
+        <div class="nav-buttons">
+            <button class="btn btn-outline" onclick="location.href='index.html'">Home</button>
+            <button class="btn btn-primary" onclick="location.href='login.html'">Login</button>
+        </div>
+    </div>
+
+    <div class="container fade-in">
+        <div class="form-container">
+            <h2 style="text-align: center; margin-bottom: 2rem;">Create New Account</h2>
+            <form id="registerForm" onsubmit="event.preventDefault(); registerUser();">
+                <div class="form-group">
+                    <label>Full Name</label>
+                    <input type="text" id="fullname" placeholder="Enter your full name" required>
+                </div>
+                <div class="form-group">
+                    <label>Username</label>
+                    <input type="text" id="username" placeholder="Choose a username" required>
+                </div>
+                <div class="form-group">
+                    <label>Email</label>
+                    <input type="email" id="email" placeholder="Enter your email" required>
+                </div>
+                <div class="form-group">
+                    <label>Password</label>
+                    <input type="password" id="password" placeholder="Create a password" required>
+                </div>
+                <button type="submit" class="btn btn-primary" style="width: 100%;">Register</button>
+            </form>
+            <p style="text-align: center; margin-top: 1rem;">
+                Already have an account? <a href="login.html" style="color: #667eea;">Login</a>
+            </p>
+        </div>
+    </div>
+
+    <script src="js/auth.js"></script>
+</body>
+</html>
